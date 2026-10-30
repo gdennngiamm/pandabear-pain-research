@@ -18,7 +18,8 @@ QA legend: PASS (evidence cited), FAIL, BLOCKED (what is missing).
 | 11 | No credentials or cookies committed | PASS | .env.template unchanged (placeholders only); no Reddit cookies, session data, or API keys added anywhere. |
 | 12 | PRODUCT_VISION.md present | PASS | Repo root. |
 | 13 | CHECKLIST.md present | PASS | This file. |
-| 14 | g-denn has push access | PASS (pending acceptance) | Collaborator invitation sent to g-denn from owner account gdennngiamm on Oct 30 via repo settings/access (GitHub: "g-denn has been added as a collaborator on the repository"). Access activates when g-denn accepts GitHub's invite. |
+| 14 | Collaborator invitation sent to g-denn | PASS | Collaborator invitation sent to g-denn from owner account gdennngiamm on Oct 30 via repo settings/access (GitHub: "g-denn has been added as a collaborator on the repository"). Access activates when g-denn accepts GitHub's invite. |
+| 14b | g-denn push access active | BLOCKED | Access activates only when g-denn accepts the GitHub invitation; not accepted as of Oct 30. Invitation itself is done (row 14). |
 | 15 | Dependencies install + code compiles | PASS | Oct 30 sandbox clone of this fork: python3.10 venv, `pip install -r requirements.txt` OK; `python -m compileall` clean after fixes in #16. |
 | 16 | Upstream bugs found and fixed | PASS | (a) `from datetime import UTC` breaks on Python 3.10 (datetime.UTC is 3.11+) in db/reader.py and db/writer.py -> replaced with `from datetime import timezone; UTC = timezone.utc`. (b) `scheduler.schedulers` -> `apscheduler.schedulers` in scheduler/daily_scheduler.py. Both fixes committed to this fork. |
 | 17 | Modules import / fail closed without secrets | PASS | After fixes: db.reader, db.writer, gui.gui import OK. reddit.scraper, scheduler.runner and main fail closed at startup on missing PRAW client_id - expected behavior with no Reddit API credentials configured; no secret exposure. |
