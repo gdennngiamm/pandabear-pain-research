@@ -487,17 +487,23 @@ def run_daily_pipeline():
 
     log.info("Step 3: Preparing posts for filtering...")
     filter_batch = prepare_filter_batch(scraped_posts)
-    filter_cost = estimate_filter_cost(scraped_posts)
-    log.info(f"Estimated cost for filtering: ${filter_cost:.2f}")
 
-    if not can_process_batch(filter_cost):
-        log.error("Insufficient budget for filtering. Exiting pipeline.")
-        return
+    if config["ai"]["provider"] == "openrouter":
+        # Zero-spend sync route: free models, daily-capped, fail-closed.
+        from gpt.openrouter_sync import run_filter_stage
+        filter_result_paths = run_filter_stage(filter_batch)
+    else:
+        filter_cost = estimate_filter_cost(scraped_posts)
+        log.info(f"Estimated cost for filtering: ${filter_cost:.2f}")
 
-    model_filter = config["ai"][config["ai"]["provider"]]["model_filter"]
-    filter_batches = split_batch_by_token_limit(filter_batch, model_filter)
+        if not can_process_batch(filter_cost):
+            log.error("Insufficient budget for filtering. Exiting pipeline.")
+            return
 
-    filter_result_paths = submit_batches_parallel(filter_batches, model_filter, generate_batch_payload, "filter")
+        model_filter = config["ai"][config["ai"]["provider"]]["model_filter"]
+        filter_batches = split_batch_by_token_limit(filter_batch, model_filter)
+
+        filter_result_paths = submit_batches_parallel(filter_batches, model_filter, generate_batch_payload, "filter")
 
     log.info("Step 4: Selecting high-potential posts from filter results...")
     high_potential_ids, all_filtered_ids = get_high_potential_ids_from_filter_results(filter_result_paths)
@@ -519,20 +525,24 @@ def run_daily_pipeline():
         return
 
     insight_batch = prepare_insight_batch(deep_posts)
-    insight_cost = estimate_insight_cost(insight_batch)
-    log.info(f"Estimated cost for insight analysis: ${insight_cost:.2f}")
-
-    if not can_process_batch(insight_cost):
-        log.error("Insufficient budget for insight analysis. Exiting pipeline.")
-        return
-
-    log.info(f"Submitting batch of {len(insight_batch)} posts for deep analysis...")
     log.info(f"Preparing {len(insight_batch)} posts for deep insight...")
-    model_deep = config["ai"][config["ai"]["provider"]]["model_deep"]
-    insight_batches = split_batch_by_token_limit(insight_batch, model_deep)
-    all_insight_paths = submit_batches_parallel(
-        insight_batches, model_deep, generate_batch_payload, "insight"
-    )
+    if config["ai"]["provider"] == "openrouter":
+        from gpt.openrouter_sync import run_insight_stage
+        all_insight_paths = run_insight_stage(insight_batch)
+    else:
+        insight_cost = estimate_insight_cost(insight_batch)
+        log.info(f"Estimated cost for insight analysis: ${insight_cost:.2f}")
+
+        if not can_process_batch(insight_cost):
+            log.error("Insufficient budget for insight analysis. Exiting pipeline.")
+            return
+
+        log.info(f"Submitting batch of {len(insight_batch)} posts for deep analysis...")
+        model_deep = config["ai"][config["ai"]["provider"]]["model_deep"]
+        insight_batches = split_batch_by_token_limit(insight_batch, model_deep)
+        all_insight_paths = submit_batches_parallel(
+            insight_batches, model_deep, generate_batch_payload, "insight"
+        )
 
     log.info("Step 5: Updating posts with deep insights...")
     insight_completed_ids = []
