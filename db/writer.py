@@ -1,6 +1,8 @@
 import sqlite3
 from config.config_loader import get_config
-from datetime import datetime, UTC
+from datetime import datetime, timezone
+
+UTC = timezone.utc  # py3.10 compat (datetime.UTC is 3.11+)
 from pathlib import Path
 
 config = get_config()
