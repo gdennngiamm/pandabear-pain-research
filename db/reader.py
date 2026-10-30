@@ -1,7 +1,9 @@
 # db/reader.py
 
 import sqlite3
-from datetime import datetime, UTC
+from datetime import datetime, timezone
+
+UTC = timezone.utc  # py3.10 compat (datetime.UTC is 3.11+)
 from config.config_loader import get_config
 from pathlib import Path
 
