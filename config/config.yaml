@@ -1,34 +1,31 @@
-# config/config.yaml
+# config/config.yaml - PandaBear Investing adaptation
+# Retargeted from generic marketing-lead scraping to investment-community
+# pain-point research (see PRODUCT_VISION.md).
 
 # Target communities
 subreddits:
   primary:
-    - devops
-    - selfhosted
-    - webdev
-    - startups
-    - personalfinance
-    - Parenting
-    - smallbusiness
-    - Fitness
-    - saas
-    - entrepreneurship
-    - sports
-    - technology
-    - security
-    - pregnant
-    - Beauty
+    - ValueInvesting
+    - SecurityAnalysis
+    - investing
+    - stocks
+    - StockMarket
+    - smallcaps
+    - microcaps
+    - undervalued
+    - DeepValue
+    - dividends
   exploratory_limit: 12             # Max exploratory subreddits at a time
   exploratory_refresh_days: 7       # How often to refresh improvised list
-  exploratory_percentage: 90        # % of posts from exploratory communities
-  primary_percentage: 10            # % of posts from configured communities
+  exploratory_percentage: 40        # % of posts from exploratory communities
+  primary_percentage: 60            # % of posts from configured communities
 
 # Reddit scraping settings
 scraper:
   min_post_age_days: 5              # Post must be at least 5 days old
-  max_post_age_days: 7              # Ignore posts older than 3 months
-  max_items_per_day: 10           # Total posts/comments scraped per run
-  include_comments: true
+  max_post_age_days: 14             # Wider window: research pains are discussed less often than SaaS leads
+  max_items_per_day: 25             # Total posts/comments scraped per run
+  include_comments: true            # Top comments carry many of the best pain statements
   rate_limit_per_minute: 60         # Reddit API rate limit
 
 # AI provider settings
@@ -45,19 +42,22 @@ ai:
     model_deep: claude-sonnet-4-5-20250929
     default_enqueued_token_limit: 10_000_000
   use_batch_api: true
-  monthly_budget_usd: 100           # Cost cap for safety
+  monthly_budget_usd: 25            # Conservative cap; raise only with explicit approval
   max_tokens_per_post: 1000         # Estimate for budgeting
   cache_input: true                 # Reuse prompt if post is nearly identical
 
 # Scoring weights (used in filtering and final ranking)
+# PandaBear: reward pain clarity, relevance to the research workflow, evidence
+# depth and recency. Technical depth / implementability of a hypothetical
+# product barely matter for audience research, so they carry ~zero weight.
 scoring:
-  relevance_weight: 0.25
-  emotion_weight: 0.1
-  pain_point_weight: 0.2
-  implementability_weight: 0.15
-  technical_depth_weight: 0.2       # Penalize vibe-codeable ideas, reward real engineering
-  recent_activity_weight: 0.1       # Prioritize active threads
-  min_technical_depth: 4            # Hard filter: reject posts below this technical depth score
+  relevance_weight: 0.30
+  emotion_weight: 0.10
+  pain_point_weight: 0.35
+  implementability_weight: 0.05
+  technical_depth_weight: 0.0       # Repurposed as evidence-depth score; weight 0 keeps it informational
+  recent_activity_weight: 0.20      # Prioritize active threads
+  min_technical_depth: 0            # Hard filter disabled (0 = accept all)
   output_top_n: 10                  # Number of final posts to recommend
 
 # Database settings
@@ -66,7 +66,7 @@ database:
   retention_days: 90                # Auto-remove posts older than this
 
 # Logging & output
-log_level: DEBUG                   # For debug & reuse
+log_level: INFO
 save_batch_payloads: true           # For debug & reuse
 
 cleanup:
