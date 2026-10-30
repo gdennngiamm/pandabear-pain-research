@@ -1,3 +1,22 @@
+# PandaBear adaptation (fork)
+
+This fork adapts Mohamedsaleh14/Reddit_Scrapper for investment-community
+pain-point research to define PandaBear Investing's target audience. See
+PRODUCT_VISION.md (purpose, license constraint) and CHECKLIST.md (QA).
+
+Changes from upstream: investment-community subreddits and weights in
+config/config.yaml; research-workflow pain detection in
+gpt/prompts/filter.txt; audience-evidence extraction in
+gpt/prompts/insight.txt; investing-focused community discovery in
+gpt/prompts/community_discovery.txt; aligned system prompts in gpt/filters.py
+and gpt/insights.py. No pipeline code changes - JSON keys are unchanged.
+
+Adapted code remains under the upstream NON-COMMERCIAL license: internal
+research use only, attribution retained. Upstream author: Mohamed-Saleh
+(https://github.com/Mohamedsaleh14), built for Cronlytic.com.
+
+---
+
 [![Visit Cronlytic](https://img.shields.io/badge/Cronlytic.com-Explore%20Serverless%20Scheduling-blue)](https://www.cronlytic.com)
 
 > Built to uncover hidden marketing signals on Reddit — and help power smarter growth for Cronlytic.com 🚀
