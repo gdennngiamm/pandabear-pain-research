@@ -15,6 +15,26 @@ Adapted code remains under the upstream NON-COMMERCIAL license: internal
 research use only, attribution retained. Upstream author: Mohamed-Saleh
 (https://github.com/Mohamedsaleh14), built for Cronlytic.com.
 
+## Status (Oct 30, 2026)
+
+Installed and offline-tested only - NOT run live.
+
+- Dependencies install, code compiles, DB roundtrip passes (see CHECKLIST.md).
+- Two upstream bugs fixed: Python 3.10 `datetime.UTC` import, `apscheduler` import.
+- Added `gpt/openrouter_sync.py`: zero-spend AI route using OpenRouter free
+  models (sync API, free-only enforced, no paid fallback, daily cap 50,
+  `data_collection="deny"` routing). Full-pipeline replay with fixture posts
+  passes end to end (scrape stub -> filter -> insight -> DB -> top insights).
+  Fixture replay is not a live run.
+- LIVE COLLECTION BLOCKED: Reddit closed self-serve API access on Nov 11,
+  2025. New apps require Reddit's explicit approval before any API data
+  access, and commercial use needs separate written approval
+  (https://support.reddithelp.com/hc/en-us/articles/42728983564564-Responsible-Builder-Policy).
+  No approval has been requested or granted. Do not create apps or submit
+  requests without the owner's direction.
+- AI key: none configured. OpenRouter key creation is held pending owner
+  approval. Spend fails closed (`monthly_budget_usd: 0`).
+
 ---
 
 [![Visit Cronlytic](https://img.shields.io/badge/Cronlytic.com-Explore%20Serverless%20Scheduling-blue)](https://www.cronlytic.com)
