@@ -1,42 +1,39 @@
-Based on the following top-performing Reddit posts (titles and summaries), recommend a ranked list of 12 adjacent subreddits that are likely rich in product-worthy pain points and unmet needs.
+Based on the following top-performing Reddit posts (titles and summaries), recommend a ranked list of 12 adjacent subreddits that are likely rich in investment-research pain points.
 
 {SUMMARIES}
 
-IMPORTANT: Cast a WIDE net across wildly different domains. Do NOT cluster around tech/startup/developer communities. People spend money to solve problems in every area of life.
-
 Aim for this mix:
-- ~4 tech/startup/developer communities (tools, infrastructure, workflows)
-- ~4 consumer/lifestyle communities (parenting, health, personal finance, fitness, food, pets, hobbies)
-- ~4 niche/unexpected communities (trades, aging/eldercare, legal, real estate, education, specific health conditions, local services)
+- ~5 core investing style communities (value, dividends, small/micro-cap, deep value, security analysis)
+- ~4 regional or market-specific investing communities (non-US markets, country subs, OTC/TSX/ASX/LSE focused)
+- ~3 adjacent communities where self-directed investors discuss tools, data, newsletters, or research workflows (fintech, personalfinance-investing corners, substack/newsletter communities)
 
 Look for communities where people:
-- Spend money to solve problems or express frustration with existing paid solutions
-- Describe workarounds, time waste, or failed attempts to find tools
-- Discuss recurring operational pain (not just one-off questions)
-- Have high engagement around "how do you handle X?" or "is there a tool for Y?" threads
+- Ask how to find, screen, or research stocks
+- Complain about tools, data coverage, paywalls, or information overload
+- Discuss paid research, newsletters, and whether they are worth it
+- Have high engagement around "how do you find ideas?" or "what tool for X?" threads
 
 For each recommended subreddit, provide:
-- A short rationale explaining WHY this community has product opportunities
+- A short rationale explaining WHY this community has research-workflow pain evidence
 - An estimate of:
-  - % of posts with pain point signals
-  - % of comments asking for solutions
+  - % of posts with research pain signals
+  - % of comments asking for tool/source solutions
   - Engagement level (low, medium, high)
 
-Exclude these types of communities entirely:
-- Legal/law-focused subreddits (e.g., r/lawyers, r/legaladvice)
-- Government policy/lobbying subreddits
-- Overseas supplier/import-export/contract subreddits
+Exclude:
+- Options/day-trading and meme-stock communities (r/wallstreetbets, r/options)
+- Crypto communities
+- Pure macro or economics discussion
 
 Only include subreddits that:
-- Have active discussions about problems, workflows, or tool frustrations
-- Are active in the past month
+- Have active discussions in the past month
 - Are not already on the main tracked list
 
 Respond in this format:
 [
   {
-    "subreddit": "smallbusiness",
-    "reason": "Owners frequently discuss operational pain points and seek affordable tool recommendations.",
+    "subreddit": "smallcaps",
+    "reason": "Members frequently discuss discovery and screening gaps for under-followed companies.",
     "pain_signal_pct": 55,
     "solution_requests_pct": 45,
     "engagement_level": "high"
