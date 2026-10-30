@@ -42,7 +42,7 @@ ai:
     model_deep: claude-sonnet-4-5-20250929
     default_enqueued_token_limit: 10_000_000
   use_batch_api: true
-  monthly_budget_usd: 25            # Conservative cap; raise only with explicit approval
+  monthly_budget_usd: 0             # FAIL CLOSED: 0 blocks all AI spend. Raise only after the owner explicitly approves a budget.
   max_tokens_per_post: 1000         # Estimate for budgeting
   cache_input: true                 # Reuse prompt if post is nearly identical
 
